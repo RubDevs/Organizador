@@ -1,15 +1,21 @@
 ---
 es:
-  categories:
-    form:
-      desciption: Descripcion
-      name: Nombre
-    new_category: Nueva Categoria
   activerecord:
     models:
       category:
         one: Categoria
         others: Categorias
+  categories:
+    description: Description
+    form:
+      desciption: Descripcion
+      name: Nombre
+    listing_categories: Listing categories
+    name: Name
+    new_category: Nueva Categoria
   common:
     back: Atras
   hello: Hello world
+  task:
+    error:
+      invalid_due_date: La fecha no puede estar en el pasado
