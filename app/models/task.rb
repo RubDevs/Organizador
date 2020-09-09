@@ -9,13 +9,14 @@
 #  category_id :bigint           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  owner_id    :bigint           not null
 #
 class Task < ApplicationRecord
   belongs_to :category
   belongs_to :owner, class_name: 'User'
   has_many :participating_users, class_name: 'Participant'
   has_many :participants, through: :participating_users, source: :user
-
+  has_many :notes
   after_create :send_email
 
   validates :participating_users, presence: true
