@@ -16,6 +16,8 @@ class Task < ApplicationRecord
   has_many :participating_users, class_name: 'Participant'
   has_many :participants, through: :participating_users, source: :user
 
+  after_create :send_email
+
   validates :participating_users, presence: true
   validates :name, :description, presence:true
   validates :name, uniqueness:{case_insensitive: false}
@@ -27,5 +29,11 @@ class Task < ApplicationRecord
     return if due_date.blank?
     return if due_date > Date.today
     errors.add :due_date, I18n.t('task.error.invalid_due_date')
+  end
+
+  def send_email
+    (participants + [owner]).each do |user|
+      ParticipantMailer.with(user: user,task: self).new_task_email.deliver!
+    end
   end
 end
