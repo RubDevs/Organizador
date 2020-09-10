@@ -5,6 +5,9 @@ require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'factory_bot_rails'
+require 'database_cleaner'
+require 'capybara/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -31,8 +34,24 @@ RSpec.configure do |config|
   # should set use_transactional_fixtures to false.
   #
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
-  # config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
+  config.include FactoryBot::Syntax::Methods
+  config.include Warder::Test::Helpers
+  config.include Devise::Test::ControllerHelpers, type: 'controller'
+
+  configure.before(:suite) do
+    DatabaseCleaner.orm = 'mongoid'
+    DatabaseCleaner.clean
+  end
+
+  configure.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  configure.after(:each) do
+    DatabaseCleaner.clean
+  end
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
