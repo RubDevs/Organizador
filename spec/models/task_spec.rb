@@ -15,20 +15,40 @@ RSpec.describe Task, type: :model do
   it { is_expected.to validate_uniqueness_of(:name) }
 
   describe '#save' do
-    let(:participants_count) { 4 }
-    subject(:task) { build(:task_with_participants, participants_count: participants_count) }
-    
-    it 'is persisted' do
-      expect(task.save).to eq true
+    context 'with params from scratch' do
+      let(:owner) { create :user }
+      let(:category) { create :category }
+      let(:participant_1) { build :participant, :responsible }
+      let(:participant_2) { build :participant, :follower }
+
+      subject do
+        described_class.new(
+          name: 'My task',
+          description: 'desc',
+          due_date: Date.today + 5.days,
+          category: category,
+          owner: owner,
+          participating_users: [participant_1,participant_2]
+        )
+      end 
+      it { is_expected.to be_valid }
     end
+    context 'with params from Factorybor' do
+      let(:participants_count) { 4 }
+      subject(:task) { build(:task_with_participants, participants_count: participants_count) }
+      
+      it 'is persisted' do
+        expect(task.save).to eq true
+      end
 
-    context 'after save' do
-      before(:each) { task.save }
+      context 'after save' do
+        before(:each) { task.save }
 
-      it 'has all associated participants' do
-        expect(task.participating_users.count).to eq participants_count
-        expect(Participant.count).to eq participants_count
+        it 'has all associated participants' do
+          expect(task.participating_users.count).to eq participants_count
+          expect(Participant.count).to eq participants_count
 
+        end
       end
     end
   end
