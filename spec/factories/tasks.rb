@@ -1,3 +1,4 @@
+# spec/factories/tasks.rb
 FactoryBot.define do
   factory :task do
     sequence(:name) { |n| "Tarea #{n}" }
@@ -6,21 +7,25 @@ FactoryBot.define do
     category
     association :owner, factory: :user
       
+    
     factory :task_with_participants do
       transient do
-        participants_count { 5 }
-      end
-  
-    after(:build) do |task, evaluator|
-      task.participating_users = build_list(
-      :participant,
-      evaluator.participants_count,
-      task: task,
-      role: 1
-      )
+      participants_count { 5 }
       
-      task.category.save
-      task.owner.save
+      end
+      
+      after(:build) do |task, evaluator|
+        task.participating_users = build_list(
+        :participant,
+        evaluator.participants_count,
+        task: task,
+        role: 1
+        )
+        
+        task.category.save
+        task.owner.save
+      
+      end
     end
-  end 
+  end  
 end

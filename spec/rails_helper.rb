@@ -37,19 +37,19 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.include FactoryBot::Syntax::Methods
-  config.include Warder::Test::Helpers
+  config.include Warden::Test::Helpers
   config.include Devise::Test::ControllerHelpers, type: 'controller'
 
-  configure.before(:suite) do
+  config.before(:suite) do
     DatabaseCleaner.orm = 'mongoid'
     DatabaseCleaner.clean
   end
 
-  configure.before(:each) do
+  config.before(:each) do
     DatabaseCleaner.start
   end
 
-  configure.after(:each) do
+  config.after(:each) do
     DatabaseCleaner.clean
   end
   # RSpec Rails can automatically mix in different behaviours to your tests
