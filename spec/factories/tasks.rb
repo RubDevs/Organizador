@@ -10,7 +10,7 @@ FactoryBot.define do
     
     factory :task_with_participants do
       transient do
-      participants_count { 5 }
+        participants_count { 5 }
       
       end
       
