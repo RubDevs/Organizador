@@ -21,7 +21,7 @@ RSpec.describe Task, type: :model do
       let(:participant_1) { build :participant, :responsible }
       let(:participant_2) { build :participant, :follower }
 
-      subject do
+      subject(:task) do
         described_class.new(
           name: 'My task',
           description: 'desc',
@@ -32,6 +32,16 @@ RSpec.describe Task, type: :model do
         )
       end 
       it { is_expected.to be_valid }
+      context 'after save' do
+        before(:each) { task.save }
+        it { is_expected.to be_persisted}
+
+
+      end
+      context 'with due_date in the past' do
+        subject { task.tap { |t| t.due_date = Date.today - 1.day }}
+        it { is_expected.to_not be_valid}
+      end
     end
     context 'with params from Factorybor' do
       let(:participants_count) { 4 }
