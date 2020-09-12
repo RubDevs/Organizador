@@ -11,7 +11,7 @@ tasks:
     form:
         setup: ->
             $('.participants').on 'cocoon:before-insert', (e, insertedItem, originalEvent)) ->
-                
+                PLATZI.misc.selectizeByScope insertedItem
             return 
 misc:
     selectizeByScope: (selector) ->
