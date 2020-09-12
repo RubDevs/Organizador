@@ -33,6 +33,6 @@ class Task
 
   def send_email
     return unless Rails.env.development?
-    Tasks::SendEmail.new.call
+    Tasks::SendEmailJob.new.call
   end
 end
