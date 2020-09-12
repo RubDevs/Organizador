@@ -52,6 +52,14 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
+  config.before(:each, type: :system) do
+    driven_by(:rack_test)
+  end
+
+  config.before(:each, type: :system, js: true)  do
+    driven_by(:selenium_chrome_headless)
+  end
+
   config.after(:each) do
     DatabaseCleaner.clean
   end
