@@ -40,6 +40,7 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include Devise::Test::ControllerHelpers, type: 'controller'
   config.include Devise::Test::IntegrationHelpers, type: 'request'
+  config.include Devise::Test::IntegrationHelpers, type: 'system'
   config.include Mongoid::Matchers, type: :model
 
   config.before(:suite) do
