@@ -1,9 +1,9 @@
 class Tasks::TriggerEvent
-    def call(task,event)
+    def call(task, event)
         task.send "#{event}!"
-        [true,'successful']
+        [true, 'successful']
     rescue => e
         Rails.logger.error e
-        [false,'failed']
+        [false, 'failed']
     end
 end
