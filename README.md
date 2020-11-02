@@ -31,7 +31,7 @@ $ rails server
 
 Demo  
 ![login](/assets/logintasker.png)  
-![dashboard](/assets/dashboardtarker.png)  
+![dashboard](/assets/dashboardtasker.png)  
 ![create](/assets/createtask.png)
 
 ## License
