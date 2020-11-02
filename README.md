@@ -46,5 +46,4 @@ Setup:
 
 - Rails version 6.0.3.2
 
-- Database on Postgres
-- [Deployed at](https://rubdevsorganizador.herokuapp.com/)
+- Database on MongoDB 4.2.7
